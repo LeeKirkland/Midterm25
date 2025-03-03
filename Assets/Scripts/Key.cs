@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KeyColor
+public enum KeyColor          //makes drop down for different colors you can assigne to game objects with current script on it   
 {
     Green,
     Blue,
@@ -36,15 +36,17 @@ public class Key : MonoBehaviour
         {
             Player player = other.GetComponent<Player>();
 
-            if (keyColor == KeyColor.Green)     //explaines what will happen if the color of the key is green and not red or blue
+            if (keyColor == KeyColor.Green)     //asking if the color of the key is green and not red or blue
             {
                 if (player.hasGreenKey == false)        //saying what will happen if the player does NOT (false) have the green key when interacting with the green key
                 {
                     player.hasGreenKey = true;      //this is making it so that the player now has the green key (having the key is true now)
-                    Destroy(player.gameObject);     //this will make the green key disappear (detroys it)
+                    Destroy(gameObject);     //this will make the green key disappear (detroys it)
+
+                   // Debug.Log();
                 }
             }
-            else if (keyColor == KeyColor.Blue)     //saying what will happen if the key is blue not green or red 
+            else if (keyColor == KeyColor.Blue)     //saying what will happen if the key is blue not green or red and asks if it is blue 
             {
                 if (player.hasBlueKey == false)     //what will happen if the player doesn't have the blue key while triggering the trigger on the blue key
                 {
