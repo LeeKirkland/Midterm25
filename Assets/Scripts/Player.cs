@@ -15,11 +15,11 @@ public class Player : MonoBehaviour
             RaycastHit hit;     
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))        //saying what will happen if the cast of vision from the position of the camera (on the players pov) is on and hits 
             {
-                if (hit.collider.tag == "Door")     //what will happen if the "players vision" hits anything with the Door tag applied in the inspector 
+                if (hit.collider.tag == "Door")     //what will happen if the "players vision" (the raycasters line of vision) hits anything with the Door tag applied in the inspector 
                 {
                     LockedDoor door = hit.collider.GetComponent<LockedDoor>();
                     
-                    if (door.isDoorLocked == true)
+                    if (door.isDoorLocked == true)      //states what will happen if the door that is hit is locked (set as locked, locked being true)
                     {
                         //Open The Door
                     }
