@@ -14,7 +14,7 @@ public class Target : MonoBehaviour
     public AudioSource targetSound;     //references an audio clip in the content drawer that can be played
     public TargetType targetType;       //references the types of targets the game objects can be assigned as 
     private Vector3 startingPosition;QualityLevel   //references the position that the assigned objects will start at 
-    public float maxMovingTargetRange = 3f;
+    public float maxMovingTargetRange = 3f;  
 
     void Start()
     {
