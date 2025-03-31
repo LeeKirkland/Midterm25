@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TargetType      //makes drop down for different target types you can assigne to game objects with current script on it   
+public enum TargetType      //makes drop down for different target types you can assign to game objects with current script on it   
 {
     Destroyable,
     Movable,
