@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class LockedDoor : MonoBehaviour
@@ -11,41 +12,17 @@ public class LockedDoor : MonoBehaviour
 
     private void Start()
     {
-        MeshRenderer renderer = GetComponent<MeshRenderer>();
-
-        if (renderer == null)
+        if (keyColorRequired == KeyColor.Green)
         {
-            renderer = GetComponentInChildren<MeshRenderer>();
-            Debug.Log($"[LockedDoor] MeshRenderer not on '{gameObject.name}', checking children.");
+            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.green; 
         }
-
-        if (renderer != null)
-        {
-         
-            Material matInstance = new Material(renderer.material);     //makes a new material to change so that others using it (keys) arent effected
-            renderer.material = matInstance;
-
-            Color newColor = Color.white;
-
-            if (keyColorRequired == KeyColor.Green)
-            {
-                newColor = Color.green;
-            }
-            else if (keyColorRequired == KeyColor.Blue)
-            {
-                newColor = Color.blue;
-            }
-            else if (keyColorRequired == KeyColor.Red)
-            {
-                newColor = Color.red;
-            }
-
-            matInstance.color = newColor;
-            Debug.Log($"[LockedDoor] Set '{gameObject.name}' color to {newColor} based on key {keyColorRequired}");
+        else if (keyColorRequired == KeyColor.Blue)
+                {
+            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
         }
-        else
+        else if (keyColorRequired == KeyColor.Red)
         {
-            Debug.LogWarning($"[LockedDoor] No MeshRenderer found on '{gameObject.name}' or children.");
+            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
         }
     }
 
