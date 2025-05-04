@@ -58,8 +58,7 @@ public class Target : MonoBehaviour
         }
     }
 
-    // Coroutine to wait for sound to finish before disabling
-    IEnumerator PlaySoundAndDisable()
+    IEnumerator PlaySoundAndDisable()       //couroutine that waits for the sound to finish playing before stopping 
     {
         targetSound.Play();                                 // play the audio
         yield return new WaitForSeconds(targetSound.clip.length);   // wait for sound to finish

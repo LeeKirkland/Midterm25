@@ -22,22 +22,22 @@ public class Player : MonoBehaviour
 
                     if (door != null)      //makes sure the object actually has a LockedDoor script attached
                     {
-                        if (door.isDoorLocked == false)      //states what will happen if the door that is hit is not locked (set as unlocked)
+                        //check if the player has the correct key, and then try to open the door using that color
+                        if (door.keyColorRequired == KeyColor.Green && hasGreenKey)         //if the key color required to open the door is set to green AND the player has the green key
                         {
-                            door.OpenDoor();     //open the door
+                            door.TryToOpenDoor(KeyColor.Green);     //then the door will try to open with using the key that is green 
                         }
-                        else     //if the door is locked
+                        else if (door.keyColorRequired == KeyColor.Blue && hasBlueKey)       //if the key color required to open the door is set to blue AND the player has the blue key
                         {
-                            if ((door.keyColorRequired == KeyColor.Green && hasGreenKey) ||     //asking and saying what will happen if the required color of key is green AND the player has it in their inventory
-                                (door.keyColorRequired == KeyColor.Blue && hasBlueKey) ||       //checking if blue key is needed and the player has it
-                                (door.keyColorRequired == KeyColor.Red && hasRedKey))           //checking if red key is needed and the player has it
-                            {
-                                door.OpenDoor();     //open the door
-                            }
-                            else
-                            {
-                                Debug.Log("Door is locked and you do not have the right key.");    //tell the player they don't have the right key
-                            }
+                            door.TryToOpenDoor(KeyColor.Blue);          //then the door will try to open with using the key that is blue 
+                        }
+                        else if (door.keyColorRequired == KeyColor.Red && hasRedKey)         //if the key color required to open the door is set to red AND the player has the red key
+                        {
+                            door.TryToOpenDoor(KeyColor.Red);       //then the door will try to open with using the key that is green 
+                        }
+                        else
+                        {
+                            door.TryToOpenDoor(KeyColor.Red);       //tries to open the door ig the key used is red
                         }
                     }
                 }
