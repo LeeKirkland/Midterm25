@@ -10,27 +10,27 @@ public enum TargetType      //makes drop down for different target types you can
 }
 
 public class Target : MonoBehaviour
-{ 
+{
     public AudioSource targetSound;     //references an audio clip in the content drawer that can be played
     public TargetType targetType;       //references the types of targets the game objects can be assigned as 
-    private Vector3 startingPosition;QualityLevel   //references the position that the assigned objects will start at 
-    public float maxMovingTargetRange = 3f;  
+    private Vector3 startingPosition;   //references the position that the assigned objects will start at 
+    public float maxMovingTargetRange = 3f; //maximum amount that target can move
 
     void Start()
     {
-        startingPosition = transform.position;
+        startingPosition = transform.position;      //sets the starting position of the target to its current position at start
 
         if (targetType == TargetType.Destroyable)       //asks if the target is destroyable and states what happens if it is
         {
-            this.GetComponent<MeshRenderer>().material.color = Color.magenta;       //changes the material of the target game object to magenta if it is destroyable 
+            this.GetComponent<MeshRenderer>().material.color = Color.cyan;       //changes the material of the target game object to cyan if it is destroyable 
         }
         else if (targetType == TargetType.Movable)      //asks if the target is moveable and explains what will happen if it is 
         {
-            this.GetComponent<MeshRenderer>().material.color = Color.red;       //changes the material of the target game object to red if it is moveable
+            this.GetComponent<MeshRenderer>().material.color = new Color(1f, 0.5f, 0f);       //changes the material to orange-ish (not used by default colors)
         }
         else if (targetType == TargetType.DestroyableWithSound)     //asks if the target is destroyable with sound and states what will happen if it is
         {
-            this.GetComponent<MeshRenderer>().material.color = Color.yellow;        //changes the material of the target game object to yellow if it is destroyable with sound
+            this.GetComponent<MeshRenderer>().material.color = Color.white;        //changes the material of the target game object to white if it is destroyable with sound
         }
     }
 
@@ -38,25 +38,31 @@ public class Target : MonoBehaviour
     {
         if (other.gameObject.tag == "Bullet")       //asks if game object has bullet tag applied to it and states what to do if it does 
         {
-            
-            
-            if(targetType == TargetType.Destroyable)        //asks if the target is destrotyable and says happens if it is
-            {
-                gameObject.SetActive(false);        //if the target is destroyable, this will make it disapear when collided with by setting its activity to false (turning it off)
+            Destroy(other.gameObject);      //destroys the bullet that hit this target
 
-            }
-            else if(targetType == TargetType.Movable)
+            if (targetType == TargetType.Destroyable)        //asks if the target is destroyable and says what happens if it is
             {
-                float randomY = Random.Range(-maxMovingTargetRange, maxMovingTargetRange);
-                float randomZ = Random.Range(-maxMovingTargetRange, maxMovingTargetRange);
+                gameObject.SetActive(false);        //if the target is destroyable, this will make it disappear by setting its activity to false (turning it off)
+            }
+            else if (targetType == TargetType.Movable)      //if target type is movable then move it randomly within the range
+            {
+                float randomY = Random.Range(-maxMovingTargetRange, maxMovingTargetRange);    //generates random y movement range
+                float randomZ = Random.Range(-maxMovingTargetRange, maxMovingTargetRange);    //generates random z movement range
 
-                transform.position = startingPosition + new Vector3(0f, randomY, randomZ);
+                transform.position = startingPosition + new Vector3(0f, randomY, randomZ);     //moves the target randomly around its original position
             }
-            else if (targetType == TargetType.DestroyableWithSound)
+            else if (targetType == TargetType.DestroyableWithSound)     //if it's a destroyable target with sound
             {
-                targetSound.Play();     //triggers the sound being referenced by the TargetSound to be played 
-                gameObject.SetActive(false);        //makes the target disapear by setting it being active and visible to false (not active anymore)
+                StartCoroutine(PlaySoundAndDisable());    //play sound then disable after it ends
             }
         }
+    }
+
+    // Coroutine to wait for sound to finish before disabling
+    IEnumerator PlaySoundAndDisable()
+    {
+        targetSound.Play();                                 // play the audio
+        yield return new WaitForSeconds(targetSound.clip.length);   // wait for sound to finish
+        gameObject.SetActive(false);                        // then disable the object
     }
 }

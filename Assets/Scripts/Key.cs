@@ -43,7 +43,6 @@ public class Key : MonoBehaviour
                     player.hasGreenKey = true;      //this is making it so that the player now has the green key (having the key is true now)
                     Destroy(gameObject);     //this will make the green key disappear (detroys it)
 
-                   // Debug.Log();
                 }
             }
             else if (keyColor == KeyColor.Blue)     //saying what will happen if the key is blue not green or red and asks if it is blue 
